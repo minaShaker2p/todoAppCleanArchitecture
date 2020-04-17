@@ -72,7 +72,6 @@ class NoteFragment : Fragment() {
         arguments?.let {
             noteId = NoteFragmentArgs.fromBundle(it).noteId
         }
-
         if (noteId != 0L) {
             viewModel.getNote(noteId)
         }
@@ -121,6 +120,4 @@ class NoteFragment : Fragment() {
         val imm = context?.getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(edtTitle.windowToken, 0)
     }
-
-
 }
