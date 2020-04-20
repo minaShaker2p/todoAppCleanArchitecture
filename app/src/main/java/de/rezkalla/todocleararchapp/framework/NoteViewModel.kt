@@ -4,13 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import de.rezkalla.core.data.Note
-import de.rezkalla.core.repository.NoteRepository
-import de.rezkalla.core.usecase.AddNote
-import de.rezkalla.core.usecase.GetAllNotes
-import de.rezkalla.core.usecase.GetNote
-import de.rezkalla.core.usecase.RemoveNote
-import de.rezkalla.todocleararchapp.framework.di.ApplicationModule
-import de.rezkalla.todocleararchapp.framework.di.DaggerViewModelComponent
+import de.rezkalla.todocleararchapp.TodoApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,10 +17,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var useCases: UseCases
 
     init {
-        DaggerViewModelComponent.builder()
-            .applicationModule(ApplicationModule(application))
-            .build()
-            .inject(this)
+        TodoApplication.getViewModelComponent()?.inject(this)
     }
 
     val saved = MutableLiveData<Boolean>()

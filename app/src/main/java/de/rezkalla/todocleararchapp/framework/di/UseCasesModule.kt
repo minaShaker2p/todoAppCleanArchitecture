@@ -8,6 +8,7 @@ import de.rezkalla.todocleararchapp.framework.UseCases
 
 @Module
 class UseCasesModule {
+
     @Provides
     fun provideUseCases(repository: NoteRepository) = UseCases(
         AddNote(repository),
