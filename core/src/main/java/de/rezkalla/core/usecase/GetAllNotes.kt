@@ -4,5 +4,5 @@ import de.rezkalla.core.repository.NoteRepository
 
 class GetAllNotes(private val noteRepository: NoteRepository) {
 
-    suspend operator fun invoke() = noteRepository.getAllNotes()
+     operator fun invoke() = noteRepository.getAllNotes()
 }

@@ -6,6 +6,7 @@ import de.rezkalla.core.repository.NoteDataSource
 import de.rezkalla.todocleararchapp.framework.db.DatabaseService
 import de.rezkalla.todocleararchapp.framework.db.NoteEntity
 import de.rezkalla.todocleararchapp.framework.db.toNote
+import kotlinx.coroutines.flow.*
 
 class RoomNoteDataSource(context: Context) : NoteDataSource {
 
@@ -15,7 +16,8 @@ class RoomNoteDataSource(context: Context) : NoteDataSource {
 
     override suspend fun getNote(id: Long) = noteDao.getNote(id)?.toNote()
 
-    override suspend fun getAll() = noteDao.getAllNotes().map { it.toNote() }
+    override fun getAll() =
+        noteDao.getAllNotes().map { noteList -> noteList.map { note -> note.toNote() } }
 
     override suspend fun removeNote(note: Note) = noteDao.removeNote(NoteEntity.fromNote(note))
 }

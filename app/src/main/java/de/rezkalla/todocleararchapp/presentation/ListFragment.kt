@@ -14,11 +14,11 @@ import de.rezkalla.todocleararchapp.TodoApplication
 import de.rezkalla.todocleararchapp.framework.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
 
-class ListFragment : Fragment(),ListAction {
+class ListFragment : Fragment(), ListAction {
 
     private lateinit var viewModel: ListViewModel
 
-    private val notesAdapter = NoteListAdapter(arrayListOf(),this)
+    private val notesAdapter = NoteListAdapter(arrayListOf(), this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +44,11 @@ class ListFragment : Fragment(),ListAction {
 
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.getNotes()
+    }
+
     private fun observeViewModel() {
         viewModel.notes.observe(this, Observer { noteList ->
             progressBar.visibility = View.GONE
@@ -54,7 +59,7 @@ class ListFragment : Fragment(),ListAction {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getNotes()
+        //
     }
 
     private fun navigateToNoteDetails(id: Long = 0) {
