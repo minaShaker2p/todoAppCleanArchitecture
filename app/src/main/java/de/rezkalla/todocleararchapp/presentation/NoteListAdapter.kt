@@ -3,6 +3,7 @@ package de.rezkalla.todocleararchapp.presentation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import de.rezkalla.core.data.Note
 import de.rezkalla.todocleararchapp.R
@@ -10,13 +11,17 @@ import kotlinx.android.synthetic.main.item_note.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class NoteListAdapter(private val noteList: ArrayList<Note>, val action: ListAction) :
     RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
     fun updateNotes(notes: List<Note>) {
+
+        val diffCallback = NotesDiffCallback(this.noteList, notes)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         noteList.clear()
         noteList.addAll(notes)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
