@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.rezkalla.todocleararchapp.R
-import de.rezkalla.todocleararchapp.TodoApplication
 import de.rezkalla.todocleararchapp.framework.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
 
@@ -18,7 +17,7 @@ class ListFragment : Fragment(), ListAction {
 
     private lateinit var viewModel: ListViewModel
 
-    private val notesAdapter = NoteListAdapter(arrayListOf(), this)
+    private val notesAdapter = NoteListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
