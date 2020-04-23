@@ -27,9 +27,8 @@ class ListViewModel : ViewModel() {
     private fun getNotes() {
         coroutineScope.launch {
             val noteList = useCases.getAllNotes.invoke()
-            noteList.collect { list ->
-                list.forEach { it.wordCount = useCases.wordCount.invoke(it) }
-                notes.postValue(list)
+            noteList.collect {
+                notes.postValue(it)
             }
         }
     }

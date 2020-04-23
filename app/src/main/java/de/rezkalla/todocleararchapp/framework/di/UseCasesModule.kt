@@ -14,7 +14,6 @@ class UseCasesModule {
         AddNote(repository),
         GetAllNotes(repository),
         RemoveNote(repository),
-        GetNote(repository),
-        GetWordCount()
+        GetNote(repository)
     )
 }
