@@ -5,11 +5,13 @@ import dagger.Module
 import dagger.Provides
 import de.rezkalla.core.repository.NoteRepository
 import de.rezkalla.todocleararchapp.framework.RoomNoteDataSource
+import de.rezkalla.todocleararchapp.framework.db.DatabaseService
 
 @Module
 class RepositoryModule {
 
     @Provides
-    fun provideRepository(context: Context) = NoteRepository(RoomNoteDataSource(context))
+    fun provideRepository(databaseService: DatabaseService) =
+        NoteRepository(RoomNoteDataSource(databaseService))
 
 }
