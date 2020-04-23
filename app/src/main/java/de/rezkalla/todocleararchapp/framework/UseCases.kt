@@ -3,8 +3,8 @@ package de.rezkalla.todocleararchapp.framework
 import de.rezkalla.core.usecase.*
 
 data class UseCases(
-    val addNote: AddNote,
+    val addNoteUseCase: AddNoteUseCase,
     val getAllNotes: GetAllNotes,
-    val removeNote: RemoveNote,
-    val getNote: GetNote
+    val removeNoteUseCase: RemoveNoteUseCase,
+    val getNoteUseCase: GetNoteUseCase
 )

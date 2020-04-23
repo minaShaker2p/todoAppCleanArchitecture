@@ -1,28 +1,42 @@
 package de.rezkalla.todocleararchapp
 
+import android.app.Activity
 import android.app.Application
-import de.rezkalla.todocleararchapp.framework.di.ApplicationModule
-import de.rezkalla.todocleararchapp.framework.di.DaggerViewModelComponent
-import de.rezkalla.todocleararchapp.framework.di.DatabaseModule
-import de.rezkalla.todocleararchapp.framework.di.ViewModelComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import de.rezkalla.todocleararchapp.framework.di.DaggerAppComponent
+import javax.inject.Inject
 
 
-class TodoApplication : Application() {
+class TodoApplication : Application(), HasActivityInjector {
 
-    companion object {
-        private var component: ViewModelComponent? = null
+    @Inject
+    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
-        fun getViewModelComponent(): ViewModelComponent? {
-            return component
-        }
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return activityDispatchingAndroidInjector
     }
+
+    /*  companion object {
+          private var component: ApplicationComponent? = null
+
+          fun getViewModelComponent(): ApplicationComponent? {
+              return component
+          }
+      }*/
 
     override fun onCreate() {
         super.onCreate()
-        component = DaggerViewModelComponent.builder()
-            .applicationModule(ApplicationModule(applicationContext))
-            .databaseModule(DatabaseModule(applicationContext))
+        /*     component = DaggerViewModelComponent.builder()
+                 .applicationModule(ApplicationModule(applicationContext))
+                 .databaseModule(DatabaseModule(applicationContext))
+                 .build()*/
+        DaggerAppComponent
+            .builder()
+            .application(this)
             .build()
+            .inject(this)
     }
 
 

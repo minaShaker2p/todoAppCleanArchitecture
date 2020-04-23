@@ -6,16 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.android.support.AndroidSupportInjection
 import de.rezkalla.todocleararchapp.R
+import de.rezkalla.todocleararchapp.ViewModelFactory
 import de.rezkalla.todocleararchapp.framework.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
+import javax.inject.Inject
 
 class ListFragment : Fragment(), ListAction {
 
-    private lateinit var viewModel: ListViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<ListViewModel>
+
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(ListViewModel::class.java)
+    }
+
 
     private val notesAdapter = NoteListAdapter(this)
 
@@ -29,12 +38,11 @@ class ListFragment : Fragment(), ListAction {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        AndroidSupportInjection.inject(this)
         NotesList.apply {
             layoutManager = LinearLayoutManager(context)
             this.adapter = notesAdapter
         }
-        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
 
         addNoteButton.setOnClickListener {
             navigateToNoteDetails()
@@ -42,6 +50,7 @@ class ListFragment : Fragment(), ListAction {
         observeViewModel()
 
     }
+
 
     private fun observeViewModel() {
         viewModel.notes.observe(this, Observer { noteList ->
@@ -59,4 +68,5 @@ class ListFragment : Fragment(), ListAction {
     override fun onClick(id: Long) {
         navigateToNoteDetails(id)
     }
+
 }
