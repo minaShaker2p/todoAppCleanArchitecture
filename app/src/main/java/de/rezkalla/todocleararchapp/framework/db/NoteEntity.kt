@@ -7,19 +7,24 @@ import de.rezkalla.core.data.Note
 
 @Entity(tableName = "note")
 data class NoteEntity(
-    val title :String,
-    val content :String,
+    val title: String,
+    val content: String,
     @ColumnInfo(name = "create_time")
-    val createTime : Long,
+    val createTime: Long,
     @ColumnInfo(name = "update_time")
-    val updateTime :Long,
+    val updateTime: Long,
     @PrimaryKey(autoGenerate = true)
-    val id :Long =0L
-)
-{
+    val id: Long = 0L
+) {
     companion object {
-        fun fromNote(note: Note) =NoteEntity(note.title,note.content,note.creationTime,note.updateTime,note.id)
+        fun fromNote(note: Note) = NoteEntity(
+            title = note.title,
+            content = note.content,
+            createTime = note.creationTime,
+            updateTime = note.updateTime,
+            id = note.id
+        )
     }
 }
 
-fun NoteEntity.toNote() =Note(title,content,createTime,updateTime,id)
+fun NoteEntity.toNote() = Note(title, content, createTime, updateTime, id)
