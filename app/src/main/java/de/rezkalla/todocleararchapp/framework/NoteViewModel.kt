@@ -1,8 +1,7 @@
 package de.rezkalla.todocleararchapp.framework
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import de.rezkalla.core.data.Note
 import de.rezkalla.todocleararchapp.TodoApplication
 import kotlinx.coroutines.CoroutineScope
@@ -10,7 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NoteViewModel(application: Application) : AndroidViewModel(application) {
+class NoteViewModel : ViewModel() {
+
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     @Inject
@@ -32,7 +32,6 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             saved.postValue(true)
         }
     }
-
 
     fun getNote(id: Long) {
         coroutineScope.launch {
