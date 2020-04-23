@@ -47,7 +47,7 @@ class ListFragment : Fragment(), ListAction {
         viewModel.notes.observe(this, Observer { noteList ->
             progressBar.visibility = View.GONE
             NotesList.visibility = View.VISIBLE
-            notesAdapter.updateNotes(noteList.sortedByDescending { it.updateTime })
+            notesAdapter.updateNotes(noteList)
         })
     }
 
