@@ -44,22 +44,12 @@ class ListFragment : Fragment(), ListAction {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel.getNotes()
-    }
-
     private fun observeViewModel() {
         viewModel.notes.observe(this, Observer { noteList ->
             progressBar.visibility = View.GONE
             NotesList.visibility = View.VISIBLE
             notesAdapter.updateNotes(noteList.sortedByDescending { it.updateTime })
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //
     }
 
     private fun navigateToNoteDetails(id: Long = 0) {

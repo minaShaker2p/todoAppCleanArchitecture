@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ListViewModel : ViewModel() {
+
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     @Inject
@@ -18,19 +19,18 @@ class ListViewModel : ViewModel() {
 
     init {
         TodoApplication.getViewModelComponent()?.inject(this)
+        getNotes()
     }
 
     val notes = MutableLiveData<List<Note>>()
 
-    fun getNotes() {
+    private fun getNotes() {
         coroutineScope.launch {
             val noteList = useCases.getAllNotes.invoke()
             noteList.collect { list ->
                 list.forEach { it.wordCount = useCases.wordCount.invoke(it) }
                 notes.postValue(list)
-
             }
         }
     }
-
 }
