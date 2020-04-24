@@ -18,26 +18,16 @@ class TodoApplication : Application(), HasActivityInjector {
         return activityDispatchingAndroidInjector
     }
 
-    /*  companion object {
-          private var component: ApplicationComponent? = null
-
-          fun getViewModelComponent(): ApplicationComponent? {
-              return component
-          }
-      }*/
-
     override fun onCreate() {
         super.onCreate()
-        /*     component = DaggerViewModelComponent.builder()
-                 .applicationModule(ApplicationModule(applicationContext))
-                 .databaseModule(DatabaseModule(applicationContext))
-                 .build()*/
+        initDagger()
+    }
+
+    private fun initDagger() {
         DaggerAppComponent
             .builder()
             .application(this)
             .build()
             .inject(this)
     }
-
-
 }

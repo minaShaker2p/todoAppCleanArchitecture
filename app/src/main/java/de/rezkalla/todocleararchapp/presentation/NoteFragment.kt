@@ -10,13 +10,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import dagger.android.support.AndroidSupportInjection
 import de.rezkalla.core.data.Note
 import de.rezkalla.todocleararchapp.R
 import de.rezkalla.todocleararchapp.ViewModelFactory
-import de.rezkalla.todocleararchapp.framework.ListViewModel
 import de.rezkalla.todocleararchapp.framework.NoteViewModel
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
@@ -52,12 +50,12 @@ class NoteFragment : Fragment() {
                     AlertDialog.Builder(context!!)
                         .setTitle("Delete a Note")
                         .setMessage("Are you sure you want to delete the Note?")
-                        .setPositiveButton("Yes") { dialogInterface, i ->
+                        .setPositiveButton("Yes") { _, _ ->
                             viewModel.removeNote(
                                 currentNote
                             )
                         }
-                        .setNegativeButton("No") { dialogInterface, i -> }
+                        .setNegativeButton("No") { _, _ -> }
                         .create()
                         .show()
                 }

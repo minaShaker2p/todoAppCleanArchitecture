@@ -14,7 +14,9 @@ import java.util.*
 
 class NoteListAdapter(val action: ListAction) :
     RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
+
     private val noteList: MutableList<Note> = mutableListOf()
+
     fun updateNotes(notes: List<Note>) {
         val diffCallback = NotesDiffCallback(this.noteList, notes)
         val diffResult = DiffUtil.calculateDiff(diffCallback)

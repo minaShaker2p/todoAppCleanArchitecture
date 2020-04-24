@@ -25,20 +25,19 @@ class ListFragment : Fragment(), ListAction {
         ViewModelProvider(this, viewModelFactory).get(ListViewModel::class.java)
     }
 
-
     private val notesAdapter = NoteListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         AndroidSupportInjection.inject(this)
+
         NotesList.apply {
             layoutManager = LinearLayoutManager(context)
             this.adapter = notesAdapter
@@ -47,10 +46,9 @@ class ListFragment : Fragment(), ListAction {
         addNoteButton.setOnClickListener {
             navigateToNoteDetails()
         }
+
         observeViewModel()
-
     }
-
 
     private fun observeViewModel() {
         viewModel.notes.observe(this, Observer { noteList ->
@@ -68,5 +66,4 @@ class ListFragment : Fragment(), ListAction {
     override fun onClick(id: Long) {
         navigateToNoteDetails(id)
     }
-
 }

@@ -9,8 +9,8 @@ import de.rezkalla.core.data.Note
  */
 
 class NotesDiffCallback(private val oldNoteList: List<Note>, private val newNoteList: List<Note>) :
-
     DiffUtil.Callback() {
+
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldNoteList[oldItemPosition].id == newNoteList[newItemPosition].id
     }

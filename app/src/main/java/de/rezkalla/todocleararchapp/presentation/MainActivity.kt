@@ -9,18 +9,17 @@ import dagger.android.support.HasSupportFragmentInjector
 import de.rezkalla.todocleararchapp.R
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity()  , HasSupportFragmentInjector {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
-        setContentView(R.layout.activity_main)
-    }
-
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var fragmentInjector: DispatchingAndroidInjector<androidx.fragment.app.Fragment>
 
     override fun supportFragmentInjector(): AndroidInjector<androidx.fragment.app.Fragment> {
         return fragmentInjector
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
+        setContentView(R.layout.activity_main)
     }
 }
