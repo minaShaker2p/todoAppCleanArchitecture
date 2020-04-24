@@ -1,5 +1,6 @@
 package de.rezkalla.todocleararchapp.presentation
 
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.*
@@ -21,6 +22,11 @@ import javax.inject.Inject
 
 class NoteFragment : Fragment() {
 
+    private var currentNote = Note(title = "", content = "", creationTime = 0L, updateTime = 0L)
+
+    private var noteId = 0L
+
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory<NoteViewModel>
 
@@ -28,10 +34,10 @@ class NoteFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory).get(NoteViewModel::class.java)
     }
 
-
-    private var currentNote = Note(title = "", content = "", creationTime = 0L, updateTime = 0L)
-
-    private var noteId = 0L
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +79,6 @@ class NoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AndroidSupportInjection.inject(this)
         arguments?.let {
             noteId = NoteFragmentArgs.fromBundle(it).noteId
         }
