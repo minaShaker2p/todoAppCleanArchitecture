@@ -3,13 +3,13 @@ package de.rezkalla.todocleararchapp.framework.di
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.support.AndroidSupportInjectionModule
+import dagger.android.AndroidInjectionModule
 import de.rezkalla.todocleararchapp.TodoApplication
 import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [AndroidSupportInjectionModule::class,
+    modules = [AndroidInjectionModule::class,
         AppModule::class,
         DatabaseModule::class,
         ActivityBuilder::class]
@@ -17,10 +17,6 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(app: TodoApplication)
-
-    /* fun inject(noteViewModel: NoteViewModel)
-
-     fun inject(listViewModel: ListViewModel)*/
 
     @Component.Builder
     interface Builder {

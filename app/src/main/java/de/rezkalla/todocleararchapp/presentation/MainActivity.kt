@@ -5,16 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import de.rezkalla.todocleararchapp.R
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
-    @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<androidx.fragment.app.Fragment>
+class MainActivity : AppCompatActivity(), HasAndroidInjector {
 
-    override fun supportFragmentInjector(): AndroidInjector<androidx.fragment.app.Fragment> {
-        return fragmentInjector
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+    override fun androidInjector(): AndroidInjector<Any> {
+        return androidInjector
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
