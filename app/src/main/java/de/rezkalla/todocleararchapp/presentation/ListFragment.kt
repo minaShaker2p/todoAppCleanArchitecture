@@ -1,65 +1,67 @@
 package de.rezkalla.todocleararchapp.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.android.support.AndroidSupportInjection
 import de.rezkalla.todocleararchapp.R
-import de.rezkalla.todocleararchapp.TodoApplication
+import de.rezkalla.todocleararchapp.ViewModelFactory
 import de.rezkalla.todocleararchapp.framework.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
+import javax.inject.Inject
 
 class ListFragment : Fragment(), ListAction {
 
-    private lateinit var viewModel: ListViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<ListViewModel>
 
-    private val notesAdapter = NoteListAdapter(arrayListOf(), this)
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(ListViewModel::class.java)
+    }
+
+    private val notesAdapter = NoteListAdapter(this)
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AndroidSupportInjection.inject(this)
 
         NotesList.apply {
             layoutManager = LinearLayoutManager(context)
             this.adapter = notesAdapter
         }
-        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
 
         addNoteButton.setOnClickListener {
             navigateToNoteDetails()
         }
+
         observeViewModel()
-
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel.getNotes()
     }
 
     private fun observeViewModel() {
         viewModel.notes.observe(this, Observer { noteList ->
             progressBar.visibility = View.GONE
             NotesList.visibility = View.VISIBLE
-            notesAdapter.updateNotes(noteList.sortedByDescending { it.updateTime })
+            notesAdapter.updateNotes(noteList)
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //
     }
 
     private fun navigateToNoteDetails(id: Long = 0) {

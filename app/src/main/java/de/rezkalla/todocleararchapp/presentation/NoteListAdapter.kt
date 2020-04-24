@@ -12,11 +12,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class NoteListAdapter(private val noteList: ArrayList<Note>, val action: ListAction) :
+class NoteListAdapter(val action: ListAction) :
     RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
-    fun updateNotes(notes: List<Note>) {
+    private val noteList: MutableList<Note> = mutableListOf()
 
+    fun updateNotes(notes: List<Note>) {
         val diffCallback = NotesDiffCallback(this.noteList, notes)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         noteList.clear()
