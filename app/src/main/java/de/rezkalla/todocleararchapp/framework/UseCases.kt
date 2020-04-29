@@ -4,7 +4,7 @@ import de.rezkalla.core.usecase.*
 
 data class UseCases(
     val addNoteUseCase: AddNoteUseCase,
-    val getAllNotes: GetAllNotes,
+    val getAllNotesUseCase: GetAllNotesUseCase,
     val removeNoteUseCase: RemoveNoteUseCase,
     val getNoteUseCase: GetNoteUseCase
 )
