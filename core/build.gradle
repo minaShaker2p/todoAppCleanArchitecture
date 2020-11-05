@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.room:room-ktx:2.2.2"
+    implementation "androidx.room:room-ktx:2.2.5"
 
 }
 
