@@ -5,7 +5,7 @@ import de.rezkalla.core.repository.NoteRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetAllNotes(private val noteRepository: NoteRepository) {
+class GetAllNotesUseCase(private val noteRepository: NoteRepository) {
 
     operator fun invoke(sortType: SortType): Flow<List<Note>> {
         return if (sortType == SortType.DEC)
